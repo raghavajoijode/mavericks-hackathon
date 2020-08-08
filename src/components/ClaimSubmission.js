@@ -6,7 +6,6 @@ const ClaimSubmission = () => {
     alert("Great Shot!");
   }
 
-
   return (
     <div className="container claim-submission">
       <h1> Claim Submission</h1>

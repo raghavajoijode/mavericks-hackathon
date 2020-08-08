@@ -1,7 +1,9 @@
 import { createContext } from 'react'
 import {
     LOGIN,
-    ADD_MEMBER
+    ADD_MEMBER,
+    UPDATE_CLAIM,
+    GET_CLAIM
 } from '../types'
 
 export const AppReducers = (state, action) => {
@@ -16,6 +18,16 @@ export const AppReducers = (state, action) => {
             return {
                 ...state,
                 currentMember: action.payload
+            }
+        case GET_CLAIM:
+            return {
+                ...state,
+                currentClaim: action.payload
+            }
+        case UPDATE_CLAIM:
+            return {
+                ...state,
+                currentClaim: action.payload
             }
         default:
             return state

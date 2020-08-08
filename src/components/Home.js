@@ -6,7 +6,6 @@ const Home = prop => {
 
     const appContext = useContext(AppContext);
     const { userType } = appContext
-
     useEffect(() => {
 
     }, [appContext, userType, prop.history])

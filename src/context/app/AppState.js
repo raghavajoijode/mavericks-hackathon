@@ -3,6 +3,8 @@ import axios from 'axios'
 import AppContext, { AppReducers as Reducer } from './appContext'
 import {
     ADD_MEMBER,
+    GET_CLAIM,
+    UPDATE_CLAIM,
     LOGIN
 } from '../types'
 
@@ -12,7 +14,18 @@ const AppState = props => {
     const initialState = {
         currentMember: null,
         currentUser: null,
-        userType: null
+        userType: null,
+        currentClaim: {
+            claimRefID: '',
+            memberID: '',
+            carrierID: '',
+            providerID: '',
+            status: '',
+            amount: '',
+            ssn: '',
+            benefitPlans: [],
+            type: ''
+        }
     }
 
     //Creating a reducer 
@@ -29,6 +42,45 @@ const AppState = props => {
         } else {
             alert('UserName and Password cannot be blank')
         }
+    }
+
+    const getClaim = async (claimRefID) => {
+        const response = {
+            "data": {
+                "claimRefID": "f7ad2579-6080-4788-bbee-fdfabdcb53a2",
+                "memberID": "12312",
+                "carrierID": "32121",
+                "providerID": "ABCDE",
+                "status": null,
+                "amount": "2312",
+                "claimLines": [{
+                    "id": 5,
+                    "code": "B101",
+                    "claimRefID": "f7ad2579-6080-4788-bbee-fdfabdcb53a2",
+                    "unit": 1,
+                    "amount": 2312,
+                    "date": "2020-07-12T00:00:00.000+00:00",
+                    "dupInd": true,
+                    "dupLineID": null,
+                    "lineRefID": "f96bf7b5-a394-3c19-aa17-fe9196684a32",
+                    "status": null
+                }]
+            }
+        }
+        console.log('Calling api to get')
+        //const response = await axios.get(`http://10.94.86.4:8081/api/member/${claimRefID}`);
+        console.log("Respnse  ", response)
+        dispatch({
+            type: GET_CLAIM,
+            payload: response.data
+        })
+    }
+
+    const updateClaim = async (claim) => {
+        dispatch({
+            type: UPDATE_CLAIM,
+            payload: claim
+        })
     }
 
     const addMember = async (member) => {
@@ -57,9 +109,12 @@ const AppState = props => {
             {
                 currentMember: state.currentMember,
                 currentUser: state.currentUser,
+                currentClaim: state.currentClaim,
                 userType: state.userType,
                 addMember,
                 userLogin,
+                getClaim,
+                updateClaim
 
             }
         }>
