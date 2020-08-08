@@ -7,8 +7,10 @@ import {
 export const AppReducers = (state, action) => {
     switch (action.type) {
         case LOGIN:
-            return{
-                ...state
+            return {
+                ...state,
+                currentUser: action.payload,
+                userType: action.payload.userType
             }
         case ADD_MEMBER:
             return {

@@ -2,19 +2,34 @@ import React, { useReducer } from 'react'
 import axios from 'axios'
 import AppContext, { AppReducers as Reducer } from './appContext'
 import {
-    ADD_MEMBER
+    ADD_MEMBER,
+    LOGIN
 } from '../types'
-//axios.defaults.baseURL = 'http://localhost:7000';
 
 const AppState = props => {
 
     //Initial state values
     const initialState = {
-        currentMember: null
+        currentMember: null,
+        currentUser: null,
+        userType: null
     }
 
     //Creating a reducer 
     const [state, dispatch] = useReducer(Reducer, initialState)
+
+    const userLogin = async (loginCred) => {
+        console.log('log..', loginCred)
+        if (loginCred.userID.length > 0 &
+            loginCred.password.length > 0) {
+            dispatch({
+                type: LOGIN,
+                payload: loginCred
+            })
+        } else {
+            alert('UserName and Password cannot be blank')
+        }
+    }
 
     const addMember = async (member) => {
         const config = {
@@ -41,7 +56,11 @@ const AppState = props => {
         <AppContext.Provider value={
             {
                 currentMember: state.currentMember,
-                addMember
+                currentUser: state.currentUser,
+                userType: state.userType,
+                addMember,
+                userLogin,
+
             }
         }>
             {props.children}
